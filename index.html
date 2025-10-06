@@ -1,38 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
+  <!-- Title and theme -->
+  <title>ToDo List - Alef</title>
+  <meta name="theme-color" content="#9C27B0"/>
 
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="description" content="Lista de tarefas com notificações e persistência local." />
 
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="/">
+  <!-- Icons & Apple -->
+  <link rel="apple-touch-icon" href="icons/Icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
-
-  <!-- iOS meta tags & icons -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="to_do_list">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>to_do_list</title>
-  <link rel="manifest" href="manifest.json">
+  <!-- Splash screen (simple inline) -->
+  <style>
+    /* Splash básico enquanto o Flutter carrega */
+    #splash {
+      position: fixed;
+      inset: 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background-color:#FCEFF9;
+      z-index:9999;
+      flex-direction:column;
+      gap:16px;
+    }
+    #splash img { width:120px; height:120px; object-fit:contain; }
+    #splash .title { font-family: Roboto, Arial, sans-serif; color:#9C27B0; font-weight:700; font-size:18px; }
+  </style>
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+  <!-- Splash enquanto o app inicia -->
+  <div id="splash">
+    <img src="icons/Icon-192.png" alt="Logo"/>
+    <div class="title">ToDo List</div>
+  </div>
+
+  <!-- Conteúdo do Flutter (mantém o original gerado pelo Flutter) -->
+  <script src="main.dart.js" type="application/javascript"></script>
+
+  <!-- Remove splash quando o app estiver pronto -->
+  <script>
+    // O Flutter chama este evento quando estiver pronto.
+    window.addEventListener('flutter-first-frame', function () {
+      const s = document.getElementById('splash');
+      if (s) s.style.display = 'none';
+    });
+
+    // Caso o evento não exista, esconda após 6s (fallback)
+    setTimeout(function() {
+      const s = document.getElementById('splash');
+      if (s) s.style.display = 'none';
+    }, 6000);
+  </script>
 </body>
 </html>
